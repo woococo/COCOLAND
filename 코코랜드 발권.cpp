@@ -171,7 +171,7 @@ int main()
 	} 
 	
 	if(((ticketSelect == 3) || (ticketSelect == 4)) && (discount == 4)){ 
-		price = price * 0.49;	// 휴가장병 49% 우대, 종합  (+동반1인) 
+		price = price * 0.51;	// 휴가장병 49% 우대, 종합  (+동반1인) 
 	} 
 	 
 	if(((ticketSelect == 3) || (ticketSelect == 4)) && (discount == 5)){
@@ -179,7 +179,7 @@ int main()
 	} 
 		
 	if(((ticketSelect == 3) || (ticketSelect == 4)) && (discount == 6)){
-		price = price * 0.3;	// 다둥이 30% 우대, 종합 
+		price = price * 0.7;	// 다둥이 30% 우대, 종합 
 	} 	
 	 
 	printf("가격은 %d원입니다.\n감사합니다.\n", price);
