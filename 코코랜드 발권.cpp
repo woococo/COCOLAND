@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <time.h>
 
 int main()
 {
@@ -26,8 +27,23 @@ int main()
 	const int adultDayTotalPrice = 59000, teenDayTotalPrice = 52000, childDayTotalPrice = 47000, babyDayTotalPrice = 15000, freeDayTotalPrice = 0;
 	const int adultAfterTotalPrice = 48000, teenAfterTotalPrice = 42000, childAfterTotalPrice = 36000, babyAfterTotalPrice = 15000, freeAfterTotalPrice = 0;
 	
-	// 만 나이 계산 
-	long int todayYMD = 220316;	// 오늘날짜입력 
+	// 현재 날짜 계산	
+	struct tm *today;
+	time_t timer;
+	int year, month, day;
+	time(&timer);
+	
+	today = localtime(&timer); // 초 단위의 시간을 분리하여 구조체에 넣기
+	
+	timer = time(NULL); // 현재 시각을 초 단위로 얻기
+
+	year = (today -> tm_year -100)*10000;
+	month = (today -> tm_mon +1)*100;
+	day = today -> tm_mday;
+	
+	int todayYMD = year + month + day;
+	
+	// 만나이 계산 
 	int age, generation;
 	
 	age = (todayYMD - (choice2/10000000))/10000;
@@ -167,6 +183,5 @@ int main()
 	} 	
 	 
 	printf("가격은 %d원입니다.\n감사합니다.\n", price);
-	
 	return 0;
 }
