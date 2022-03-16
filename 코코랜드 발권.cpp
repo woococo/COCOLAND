@@ -3,21 +3,21 @@
 
 int main()
 {
-	int choice1, choice3, choice4;
-	long long int choice2;	
+	int ticketSelect, orderCount, discount;
+	long long int idNumber;	
 
 	//화면 출력 	
 	printf("권종을 선택하세요. \n1. 1DAY \n2. After4(오후 4시부터 입장)\n3. 1DAY(종합이용권) \n4. After4(종합이용권, 오후 4시부터 입장)\n");
-	scanf("%d", &choice1);
+	scanf("%d", &ticketSelect);
 	
 	printf("주민번호를 입력하세요\n");
-	scanf("%lld", &choice2);
+	scanf("%lld", &idNumber);
 	
 	printf("몇개를 주문하시겠습니까? (최대 10개) \n");
-	scanf("%d", &choice3);
+	scanf("%d", &orderCount);
 	
 	printf("우대사항을 선택하세요. \n1. 없음(나이 우대는 자동처리)\n2. 장애인 \n3. 국가유공자 \n4. 휴가장병 \n5. 임산부\n6. 다둥이\n");
-	scanf("%d", &choice4);
+	scanf("%d", &discount);
 	
 	// 파크입장권 
 	const int adultDayPrice = 56000, teenDayPrice = 50000, childDayPrice = 46000, babyDayPrice = 15000, freeDayPrice = 0;
@@ -46,18 +46,18 @@ int main()
 	// 만나이 계산 
 	int age, generation;
 	
-	age = (todayYMD - (choice2/10000000))/10000;
+	age = (todayYMD - (idNumber/10000000))/10000;
 	
-	if(((choice2 % 10000000) >= 1000000) && ((choice2 % 10000000) < 2000000 )){
+	if(((idNumber % 10000000) >= 1000000) && ((idNumber % 10000000) < 2000000 )){
 		generation = 1;		// 주민번호 뒷자리 첫번째가 1 
 	}
-	else if(((choice2 % 10000000) >= 2000000) && ((choice2 % 10000000) < 3000000 )){
+	else if(((idNumber % 10000000) >= 2000000) && ((idNumber % 10000000) < 3000000 )){
 		generation = 2;		// 주민번호 뒷자리 첫번째가 2
 	}
-	else if(((choice2 % 10000000) >= 3000000) && ((choice2 % 10000000) < 4000000 )){
+	else if(((idNumber % 10000000) >= 3000000) && ((idNumber % 10000000) < 4000000 )){
 		generation = 3;		// 주민번호 뒷자리 첫번째가 3
 	}
-	else if(((choice2 % 10000000) >= 4000000) && ((choice2 % 10000000) < 5000000 )){
+	else if(((idNumber % 10000000) >= 4000000) && ((idNumber % 10000000) < 5000000 )){
 		generation = 4;		// 주민번호 뒷자리 첫번째가 4
 	}
 	
@@ -67,7 +67,7 @@ int main()
 	
 	int price = 0;
 	
-	if(choice1 == 1){ 	// 파크 이용권 DAY 선택  
+	if(ticketSelect == 1){ 	// 파크 이용권 DAY 선택  
 		if(age < 1){
 			price = freeDayPrice;	// 0 ~ 12개월 베이비는 무료 
 		} 
@@ -89,7 +89,7 @@ int main()
 		
 	}
 	
-	else if(choice1 == 2){	// 파크 이용권 After4 선택 
+	else if(ticketSelect == 2){	// 파크 이용권 After4 선택 
 		if(age < 1){
 			price = freeAfterPrice;	// 0 ~ 12개월 베이비는 무료 
 		} 
@@ -110,7 +110,7 @@ int main()
 		}
 	}
 	
-	if(choice1 == 3){ 	// 종합이용권 Day 선택 
+	if(ticketSelect == 3){ 	// 종합이용권 Day 선택 
 		if(age < 1){
 			price = freeDayTotalPrice;	// 0 ~ 12개월 베이비는 무료 
 		} 
@@ -132,7 +132,7 @@ int main()
 		
 	}
 	
-	else if(choice1 == 4){	// 종합이용권 After4 선택 
+	else if(ticketSelect == 4){	// 종합이용권 After4 선택 
 		if(age < 1){
 			price = freeAfterTotalPrice;	// 0 ~ 12개월 베이비는 무료 
 		} 
@@ -154,34 +154,35 @@ int main()
 	}
 	
 	// 주문 개수
-	if(choice3 <= 10){
-		price = price * choice3;
+	if(orderCount <= 10){
+		price = price * orderCount;
 	}
 	else{
 		printf("잘못입력하셨습니다.\n");
 	}
 	
 	// 우대사항
-	if(choice4 == 2){
+	if(discount == 2){
 		price = price * 0.5;	// 장애인 50% 우대, 종합/파크  (+동반1인) 
 	}
 	 
-	if(choice4 == 3){
+	if(discount == 3){
 		price = price * 0.5;	// 국가유공자 50% 우대, 종합/파크  (+동반1인) 
 	} 
 	
-	if(((choice1 == 3) || (choice1 == 4)) && (choice4 == 4)){ 
+	if(((ticketSelect == 3) || (ticketSelect == 4)) && (discount == 4)){ 
 		price = price * 0.49;	// 휴가장병 49% 우대, 종합  (+동반1인) 
 	} 
 	 
-	if(((choice1 == 3) || (choice1 == 4)) && (choice4 == 5)){
+	if(((ticketSelect == 3) || (ticketSelect == 4)) && (discount == 5)){
 		price = price * 0.5;	// 임산부 50% 우대, 종합 
 	} 
 		
-	if(((choice1 == 3) || (choice1 == 4)) && (choice4 == 6)){
+	if(((ticketSelect == 3) || (ticketSelect == 4)) && (discount == 6)){
 		price = price * 0.3;	// 다둥이 30% 우대, 종합 
 	} 	
 	 
 	printf("가격은 %d원입니다.\n감사합니다.\n", price);
+
 	return 0;
 }
