@@ -216,8 +216,15 @@ int main()
 		
 		int again;
 		
-		printf("\n계속 발권 하시겠습니까? \n1. 티켓 발권\n2. 종료\n");
-		scanf("%d", &again);
+		do{
+			printf("\n계속 발권 하시겠습니까? \n1. 티켓 발권\n2. 종료\n");
+			scanf("%d", &again);
+			if(!(again ==1 || again ==2)){
+				printf("\n잘못입력하셨습니다. 다시 입력해주세요.\n\n");
+			}
+		}while (!(again ==1 || again ==2));
+		
+		
 		if(again == 2 ){
 			break; 
 		}
