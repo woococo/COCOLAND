@@ -4,8 +4,18 @@
 int main()
 {
 	for(;;){
-	
-		// 현재 날짜 계산	
+		
+		int ticketSelect, idNumber, backIdNumber, orderCount, discount;	
+		
+		// 파크입장권
+		const int ADULT_DAY = 56000, TEEN_DAY = 50000, CHILD_DAY = 46000, BABY_DAY = 15000, FREE = 0;
+		const int ADULT_AFTER = 45000, TEEN_AFTER = 40000, CHILD_AFTER = 35000, BABY_AFTER = 15000;
+		
+		// 종합입장권 
+		const int ADULT_DAY_TOTAL = 59000, TEEN_DAY_TOTAL = 52000, CHILD_DAY_TOTAL = 47000, BABY_DAY_TOTAL = 15000;
+		const int ADULT_AFTER_TOTAL = 48000, TEEN_AFTER_TOTAL = 42000, CHILD_AFTER_TOTAL = 36000, BABY_AFTER_TOTAL = 15000;
+		
+		// 오늘 날짜 계산	
 		struct tm *today;
 		time_t timer;
 		int year, month, day;
@@ -23,9 +33,7 @@ int main()
 		
 		//화면 출력 
 		printf("\n[오늘 날짜 : %d] \n\n", todayYMD);
-	
-		int ticketSelect, idNumber, backIdNumber, orderCount, discount;	
-			
+		
 		// 권종 선택 
 		do{  
 			printf("권종을 선택하세요. \n1. 1DAY \n2. After4(오후 4시부터 입장)\n3. 1DAY(종합이용권) \n4. After4(종합이용권, 오후 4시부터 입장)\n");
@@ -71,14 +79,6 @@ int main()
 			}
 		}while (!(discount ==1 || discount ==2 || discount ==3 || discount ==4 || discount == 5 || discount == 6));
 		
-		// 파크입장권 (상수는 대문자로 할 것!) 
-		const int ADULTDAYPRICE = 56000, TEENDAYPRICE = 50000, CHILDDAYPRICE = 46000, BABYDAYPRICE = 15000, FREE = 0;
-		const int ADULTAFTERPRICE = 45000, TEENAFTERPRICE = 40000, CHILDAFTERPRICE = 35000, BABYAFTERPRICE = 15000;
-		
-		// 종합입장권 
-		const int ADULTDAYTOTALPRICE = 59000, TEENDAYTOTALPRICE = 52000, CHILDDAYTOTALPRICE = 47000, BABYDAYTOTALPRICE = 15000;
-		const int ADULTAFTERTOTALPRICE = 48000, TEENAFTERTOTALPRICE = 42000, CHILDAFTERTOTALPRICE = 36000, BABYAFTERTOTALPRICE = 15000;
-		
 		// 만나이 계산 
 		int age = (todayYMD - (idNumber))/10000;
 		
@@ -92,82 +92,82 @@ int main()
 		switch(ticketSelect){
 			case 1 : 
 				if(age < 1){
-				price = FREE;	// 0 ~ 12개월 베이비는 무료 
+				price = FREE;								// 0 ~ 12개월 = 무료 
 				} 
 				else if((age >= 1) && (age < 3)){
-					price = BABYDAYPRICE;	// 12개월 이상 36개월 미만 베이비 요금  
+					price = BABY_DAY;						// 12개월 이상 36개월 미만 = 베이비 요금  
 				}
 				else if((age >= 3) && (age < 13)){
-					price = CHILDDAYPRICE;	// 36개월 이상 ~ 만 12세 어린이 요금 
+					price = CHILD_DAY;						// 36개월 이상 ~ 만 12세  =어린이 요금 
 				}
 				else if((age >= 13) && (age < 18)){
-					price = TEENDAYPRICE;	// 만 13세 ~ 18세 청소년 요금 
+					price = TEEN_DAY;						// 만 13세 ~ 18세 = 청소년 요금 
 				}
 				else if(age >= 65){
-					price = CHILDDAYPRICE;	// 만 65세 이상 = 어린이 요금 
+					price = CHILD_DAY;						// 만 65세 이상 = 어린이 요금 
 				}
 				else{
-					price = ADULTDAYPRICE;	// 나머지 어른 요금 
+					price = ADULT_DAY;						// 나머지 = 어른 요금 
 				} 
 				
 			case 2 :
 				if(age < 1){
-				price = FREE;	// 0 ~ 12개월 베이비는 무료 
+				price = FREE;								// 0 ~ 12개월 = 무료 
 				} 
 				else if((age >= 1) && (age < 3)){
-					price = BABYAFTERPRICE;	// 12개월 이상 36개월 미만 베이비 요금  
+					price = BABY_AFTER;						// 12개월 이상 36개월 미만 = 베이비 요금  
 				}
 				else if((age >= 3) && (age < 13)){
-					price = CHILDAFTERPRICE;	// 36개월 이상 ~ 만 12세 어린이 요금 
+					price = CHILD_AFTER;					// 36개월 이상 ~ 만 12세 = 어린이 요금 
 				}
 				else if((age >= 13) && (age < 18)){
-					price = TEENAFTERPRICE;	// 만 13세 ~ 18세 청소년 요금 
+					price = TEEN_AFTER;						// 만 13세 ~ 18세 = 청소년 요금 
 				}
 				else if(age >= 65){
-					price = CHILDAFTERPRICE;	// 만 65세 이상 = 어린이 요금 
+					price = CHILD_AFTER;					// 만 65세 이상 = 어린이 요금 
 				}
 				else{
-					price = ADULTAFTERPRICE;	// 나머지 어른 요금 
+					price = ADULT_AFTER;					// 나머지 = 어른 요금 
 				}
 				
 			case 3 :
 				if(age < 1){
-				price = FREE;	// 0 ~ 12개월 베이비는 무료 
+				price = FREE;								// 0 ~ 12개월 = 무료 
 				} 
 				else if((age >= 1) && (age < 3)){
-					price = BABYDAYTOTALPRICE;	// 12개월 이상 36개월 미만 베이비 요금  
+					price = BABY_DAY_TOTAL;					// 12개월 이상 36개월 미만 = 베이비 요금  
 				}
 				else if((age >= 3) && (age < 13)){
-					price = CHILDDAYTOTALPRICE;	// 36개월 이상 ~ 만 12세 어린이 요금 
+					price = CHILD_DAY_TOTAL;				// 36개월 이상 ~ 만 12세 = 어린이 요금 
 				}
 				else if((age >= 13) && (age < 18)){
-					price = TEENDAYTOTALPRICE;	// 만 13세 ~ 18세 청소년 요금 
+					price = TEEN_DAY_TOTAL;					// 만 13세 ~ 18세 = 청소년 요금 
 				}
 				else if(age >= 65){
-					price = CHILDDAYTOTALPRICE;	// 만 65세 이상 = 어린이 요금 
+					price = CHILD_DAY_TOTAL;				// 만 65세 이상 = 어린이 요금 
 				}
 				else{
-					price = ADULTDAYTOTALPRICE;	// 나머지 어른 요금 
+					price = ADULT_DAY_TOTAL;				// 나머지 = 어른 요금 
 				} 
 				
 			case 4 :
 				if(age < 1){
-				price = FREE;	// 0 ~ 12개월 베이비는 무료 
+				price = FREE;								// 0 ~ 12개월 = 무료 
 				} 
 				else if((age >= 1) && (age < 3)){
-					price = BABYAFTERTOTALPRICE;	// 12개월 이상 36개월 미만 베이비 요금  
+					price = BABY_AFTER_TOTAL;				// 12개월 이상 36개월 미만 = 베이비 요금  
 				}
 				else if((age >= 3) && (age < 13)){
-					price = CHILDAFTERTOTALPRICE;	// 36개월 이상 ~ 만 12세 어린이 요금 
+					price = CHILD_AFTER_TOTAL;				// 36개월 이상 ~ 만 12세 = 어린이 요금 
 				}
 				else if((age >= 13) && (age < 18)){
-					price = TEENAFTERTOTALPRICE;	// 만 13세 ~ 18세 청소년 요금 
+					price = TEEN_AFTER_TOTAL;				// 만 13세 ~ 18세 = 청소년 요금 
 				}
 				else if(age >= 65){
-					price = CHILDAFTERTOTALPRICE;	// 만 65세 이상 = 어린이 요금 
+					price = CHILD_AFTER_TOTAL;				// 만 65세 이상 = 어린이 요금 
 				}
 				else{
-					price = ADULTAFTERTOTALPRICE;	// 나머지 어른 요금 
+					price = ADULT_AFTER_TOTAL;				// 나머지 = 어른 요금 
 				}
 		}
 		
@@ -178,33 +178,33 @@ int main()
 		
 		// 우대사항
 		switch(discount){
-			case 1 :					// 우대사항 없음 
+			case 1 :										// 우대사항 없음 
 				price = price;
 				break;
 			
-			case 2 :					// 장애인 50% 우대, 종합/파크  (+동반1인) 
+			case 2 :										// 장애인 50% 우대, 종합/파크  (+동반1인) 
 				price = price * 0.5;
 				break;
 			
-			case 3 :					// 국가유공자 50% 우대, 종합/파크  (+동반1인)
+			case 3 :										// 국가유공자 50% 우대, 종합/파크  (+동반1인)
 				price = price * 0.5;
 				break;
 				
-			case 4 :					// 휴가장병 49% 우대, 종합  (+동반1인)
+			case 4 :										// 휴가장병 49% 우대, 종합  (+동반1인)
 				price = price;
 				if((ticketSelect == 3) || (ticketSelect == 4)){
 					price = price * 0.51;
 					}
 				break;
 			
-			case 5 :					// 임산부 50% 우대, 종합
+			case 5 :										// 임산부 50% 우대, 종합
 				price = price;
 				if((ticketSelect == 3) || (ticketSelect == 4)){
 					price = price * 0.5;
 					}
 				break;
 				
-			case 6 :					// 다둥이 30% 우대, 종합
+			case 6 :										// 다둥이 30% 우대, 종합
 				price = price;
 				if((ticketSelect == 3) || (ticketSelect == 4)){
 					price = price * 0.5;
