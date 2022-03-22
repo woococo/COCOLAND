@@ -5,7 +5,8 @@ int main()
 {
 	for(;;){
 		
-		int ticketSelect, idNumber, backIdNumber, orderCount, discount;	
+		int ticketSelect[10] = {0}, idNumber, backIdNumber, orderCount[10] = {0}, discount[10] = {0};	
+		int index = 0;
 		
 		// 파크입장권
 		const int ADULT_DAY = 56000, TEEN_DAY = 50000, CHILD_DAY = 46000, BABY_DAY = 15000, FREE = 0;
@@ -22,9 +23,7 @@ int main()
 		time(&timer);
 		
 		today = localtime(&timer); 
-		
 		timer = time(NULL); 
-	
 		year = (today -> tm_year -100)*10000;
 		month = (today -> tm_mon +1)*100;
 		day = today -> tm_mday;
@@ -37,11 +36,11 @@ int main()
 		// 권종 선택 
 		do{  
 			printf("권종을 선택하세요. \n1. 1DAY \n2. After4(오후 4시부터 입장)\n3. 1DAY(종합이용권) \n4. After4(종합이용권, 오후 4시부터 입장)\n");
-			scanf("%d", &ticketSelect);
-			if(!(ticketSelect ==1 || ticketSelect ==2 || ticketSelect ==3 || ticketSelect ==4 )){
+			scanf("%d", &ticketSelect[index]);
+			if(!(ticketSelect[index] ==1 || ticketSelect[index] ==2 || ticketSelect[index] ==3 || ticketSelect[index] ==4 )){
 				printf("\n잘못입력하셨습니다. 다시 입력해주세요.\n\n");
 				}
-		}while (!(ticketSelect ==1 || ticketSelect ==2 || ticketSelect ==3 || ticketSelect ==4 ));
+		}while (!(ticketSelect[index] ==1 || ticketSelect[index] ==2 || ticketSelect[index] ==3 || ticketSelect[index] ==4 ));
 	
 	
 		// 주민번호 입력 
@@ -65,19 +64,19 @@ int main()
 		do{
 			printf("\n몇개를 주문하시겠습니까? (최대 10개) \n");
 			scanf("%d", &orderCount);
-			if(orderCount > 10){
-					printf("\n잘못입력하셨습니다. 다시 입력해주세요.\n\n");
+			if(orderCount[index] > 10){
+				printf("\n잘못입력하셨습니다. 다시 입력해주세요.\n\n");
 				}
-		}while(orderCount > 10);
+		}while(orderCount[index] > 10);
 			
 		// 우대사항 입력 
 		do{
 			printf("\n우대사항을 선택하세요. \n1. 없음(나이 우대는 자동처리)\n2. 장애인 \n3. 국가유공자 \n4. 휴가장병 \n5. 임산부\n6. 다둥이\n");
 			scanf("%d", &discount);
-			if(!(discount ==1 || discount ==2 || discount ==3 || discount ==4 || discount == 5 || discount == 6)){
+			if(!(discount[index] ==1 || discount[index] ==2 || discount[index] ==3 || discount[index] ==4 || discount[index] == 5 || discount[index] == 6)){
 				printf("\n잘못입력하셨습니다. 다시 입력해주세요.\n\n");
-			}
-		}while (!(discount ==1 || discount ==2 || discount ==3 || discount ==4 || discount == 5 || discount == 6));
+				}
+		}while (!(discount[index] ==1 || discount[index] ==2 || discount[index] ==3 || discount[index] ==4 || discount[index] == 5 || discount[index] == 6));
 		
 		// 만나이 계산 
 		int age = (todayYMD - (idNumber))/10000;
@@ -88,8 +87,8 @@ int main()
 		
 		// 나이별 가격 측정
 		int price = 0;
-		 
-		switch(ticketSelect){
+	
+		switch(ticketSelect[index]){
 			case 1 : 
 				if(age < 1){
 				price = FREE;								// 0 ~ 12개월 = 무료 
@@ -175,14 +174,13 @@ int main()
 				break;
 		}
 		
-		
 		// 주문 개수
-		if(orderCount <= 10){
-			price = price * orderCount;
+		if(orderCount[index] <= 10){
+			price = price * orderCount[index];
 		}
 		
 		// 우대사항
-		switch(discount){
+		switch(discount[index]){
 			case 1 :										// 우대사항 없음 
 				price = price;
 				break;
@@ -197,28 +195,28 @@ int main()
 				
 			case 4 :										// 휴가장병 49% 우대, 종합  (+동반1인)
 				price = price;
-				if((ticketSelect == 3) || (ticketSelect == 4)){
+				if((ticketSelect[index] == 3) || (ticketSelect[index] == 4)){
 					price = price * 0.51;
 					}
 				break;
 			
 			case 5 :										// 임산부 50% 우대, 종합
 				price = price;
-				if((ticketSelect == 3) || (ticketSelect == 4)){
+				if((ticketSelect[index] == 3) || (ticketSelect[index] == 4)){
 					price = price * 0.5;
 					}
 				break;
 				
 			case 6 :										// 다둥이 30% 우대, 종합
 				price = price;
-				if((ticketSelect == 3) || (ticketSelect == 4)){
+				if((ticketSelect[index] == 3) || (ticketSelect[index] == 4)){
 					price = price * 0.5;
 					}
 				break;		
 			}
 		
 		printf("\n가격은 %d원입니다. 감사합니다.\n", price);
-		
+	
 		int again;
 		
 		do{
@@ -227,13 +225,73 @@ int main()
 			if(!(again ==1 || again ==2)){
 				printf("\n잘못입력하셨습니다. 다시 입력해주세요.\n\n");
 			}
+			index++;
 		}while (!(again ==1 || again ==2));
 		
 		
+				
 		if(again == 2 ){
-			break; 
+			printf("\n========== COCO LAND ===========\n");
+			
+			for(int i = 0; i <= index; i++){
+				if(ticketSelect[i] == 1){
+					printf("1DAY");}
+				else if(ticketSelect[i] == 2){
+					printf("After4");}
+				else if(ticketSelect[i] == 3){
+					printf("1DAY(종합이용권)");}
+				else if(ticketSelect[i] == 4){
+					printf("After4(종합이용권)");}
+				
+				printf(" ");
+				
+				if(age < 1){
+					printf("무료");}
+				else if((age >= 1) && (age < 3)){
+					printf("베이비");}
+				else if((age >= 3) && (age < 13)){
+					printf("어린이");}
+				else if((age >= 13) && (age < 18)){
+					printf("청소년");}
+				else if(age >= 65){
+					printf("노인");}
+				else{printf("어른");}
+			
+				printf("\tX %d개", orderCount[index]);
+				printf("\t%d원", price);
+				printf("\t*우대사항 : ");
+				
+				if(discount[i] == 1){
+					printf("우대적용없음");
+				}
+				else if(discount[i] == 2){
+					printf("장애인 50% 할인");
+				} 
+				else if(discount[i] == 3){
+					printf("국가유공자 50% 할인");
+				}
+				else if(discount[i] == 4){
+					printf("휴가장병 49% 할인");
+				}
+				else if(discount[i] == 5){
+					printf("임산부 50% 할인");
+				}
+				else if(discount[i] == 6){
+					printf("다둥이 30% 할인");
+				}
+				
+			printf("\n"); 
+				 
+			}
+			int totalPrice;
+			for(int k = 0; k < index; k++){
+				totalPrice += price;
+			}
+			printf("입장료 총액은 %d입니다.", totalPrice);
+			
+			break;
 		}
 	
-	}
+}
 	return 0;
 }
