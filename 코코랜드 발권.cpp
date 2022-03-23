@@ -3,8 +3,9 @@
 
 int main()
 {
-	int ticketSelect, idNumber, backIdNumber, orderCount, discount, age, price, countPrice, discountPrice, totalPrice, again;	
-	int ticketSelectArr[10]={0}, orderCountArr[10]={0}, discountArr[10]={0}, discountPriceArr[10] = {0};
+	int ticketSelect, idNumber, backIdNumber, orderCount, discount, age, generation, 
+		price, countPrice, discountPrice, totalPrice = 0, again;	
+	int ticketSelectArr[10]={0}, generationArr[10] = {0}, orderCountArr[10]={0}, discountArr[10]={0}, discountPriceArr[10] = {0};
 	int index = 0;
 		 
 	// 파크입장권
@@ -32,15 +33,15 @@ int main()
 	int todayYMD = year + month + day;
 		
 	do{
-		ticketSelect = 0, idNumber = 0, backIdNumber = 0, orderCount = 0, discount = 0, age = 0,
+		ticketSelect = 0, idNumber = 0, backIdNumber = 0, orderCount = 0, discount = 0, age = 0, generation = 0,
 		price = 0, countPrice = 0, discountPrice = 0; // 변수초기화 
 	
 		//화면 출력 
-		printf("************* COCOLAND ************* \n\t[오늘 날짜 : %d] \n\n", todayYMD);
+		printf("*************************** COCOLAND ************************* \n\t\t\t[TODAY : %d] \n\n", todayYMD);
 		
 		// 권종 선택 
 		do{  
-			printf(" 권종을 선택하세요.(After4는 오후 4시부터 입장) \n 1. 파크이용권 [1DAY]\n 2. 파크이용권 [After4]\n 3. 종합이용권 [1DAY]\n 4. 종합이용권 [After4]\n");
+			printf(" 권종을 선택하세요.(After4는 오후 4시부터 입장) \n 1. 파크이용권 [1DAY]\n 2. 파크이용권 [After4]\n 3. 종합이용권 [1DAY]\n 4. 종합이용권 [After4]\n\t");
 			scanf("%d", &ticketSelect);
 			
 			if(!(ticketSelect ==1 || ticketSelect ==2 || ticketSelect ==3 || ticketSelect ==4 )){
@@ -51,7 +52,7 @@ int main()
 	
 		// 주민번호 입력 
 		do{ 
-			printf("\n 주민번호 앞 6글자를 입력하세요\n");
+			printf("\n 주민번호 앞 6글자를 입력하세요\n\t");
 			scanf("%d", &idNumber);
 			
 			if(!((idNumber >= 000101) && (idNumber <= 991231))){
@@ -61,7 +62,7 @@ int main()
 		}while (!((idNumber >= 000101) && (idNumber <= 991231)));
 		
 		do{ 
-			printf("\n 주민번호 뒤 1글자를 입력하세요\n");
+			printf("\n 주민번호 뒤 1글자를 입력하세요\n\t");
 			scanf("%d", &backIdNumber);
 			if(!(backIdNumber ==1 || backIdNumber ==2 || backIdNumber ==3 || backIdNumber ==4 )){
 				printf("\n 잘못입력하셨습니다. 다시 입력해주세요.\n\n");
@@ -71,7 +72,7 @@ int main()
 		
 		// 갯수 입력 
 		do{
-			printf("\n 몇개를 주문하시겠습니까? (최대 10개) \n");
+			printf("\n 몇개를 주문하시겠습니까? (최대 10개) \n\t");
 			scanf("%d", &orderCount);
 			if(orderCount > 10){
 					printf("\n 잘못입력하셨습니다. 다시 입력해주세요.\n\n");
@@ -81,7 +82,7 @@ int main()
 			
 		// 우대사항 입력 
 		do{
-			printf("\n 우대사항을 선택하세요. \n 1. 없음(나이 우대는 자동처리)\n 2. 장애인 \n 3. 국가유공자 \n 4. 휴가장병 \n 5. 임산부\n 6. 다둥이\n");
+			printf("\n 우대사항을 선택하세요. \n 1. 없음(나이 우대는 자동처리)\n 2. 장애인 \n 3. 국가유공자 \n 4. 휴가장병 \n 5. 임산부\n 6. 다둥이\n\t");
 			scanf("%d", &discount);
 			if(!(discount ==1 || discount ==2 || discount ==3 || discount ==4 || discount == 5 || discount == 6)){
 				printf("\n 잘못입력하셨습니다. 다시 입력해주세요.\n\n");
@@ -96,90 +97,109 @@ int main()
 			age = age + 100;
 		} 
 		
+		// 연령구분
+		if(age < 1){
+			generation = 1;								 
+		}	 
+		else if((age >= 1) && (age < 3)){
+			generation = 2;	
+		}
+		else if((age >= 3) && (age < 13)){
+			generation = 3;
+		}
+		else if((age >= 13) && (age < 18)){
+			generation = 4;
+		}
+		else if((age >= 19) && (age < 65)){
+			generation = 5;
+		}
+		else if(age >= 65){
+			generation = 6;
+		}
 		// 나이별 가격 측정
 		switch(ticketSelect){
 			case 1 : 
-				if(age < 1){
-				price = FREE;								// 0 ~ 12개월 = 무료 
+				if(generation == 1){
+					price = FREE;
 				} 
-				else if((age >= 1) && (age < 3)){
-					price = BABY_DAY;						// 12개월 이상 36개월 미만 = 베이비 요금  
-				}
-				else if((age >= 3) && (age < 13)){
-					price = CHILD_DAY;						// 36개월 이상 ~ 만 12세  =어린이 요금 
-				}
-				else if((age >= 13) && (age < 18)){
-					price = TEEN_DAY;						// 만 13세 ~ 18세 = 청소년 요금 
-				}
-				else if(age >= 65){
-					price = CHILD_DAY;						// 만 65세 이상 = 어린이 요금 
-				}
-				else{
-					price = ADULT_DAY;						// 나머지 = 어른 요금 
-				} 
+				else if(generation == 2){
+					price = BABY_DAY;
+					}
+				else if(generation == 3){
+					price = CHILD_DAY;
+					}
+				else if(generation == 4){
+					price = TEEN_DAY;
+					}
+				else if(generation == 5){
+					price = ADULT_DAY;
+					}
+				else if(generation == 6){
+					price = CHILD_DAY;
+					} 
 				break;
 				
 			case 2 :
-				if(age < 1){
-				price = FREE;								// 0 ~ 12개월 = 무료 
+				if(generation == 1){
+					price = FREE;
 				} 
-				else if((age >= 1) && (age < 3)){
-					price = BABY_AFTER;						// 12개월 이상 36개월 미만 = 베이비 요금  
-				}
-				else if((age >= 3) && (age < 13)){
-					price = CHILD_AFTER;					// 36개월 이상 ~ 만 12세 = 어린이 요금 
-				}
-				else if((age >= 13) && (age < 18)){
-					price = TEEN_AFTER;						// 만 13세 ~ 18세 = 청소년 요금 
-				}
-				else if(age >= 65){
-					price = CHILD_AFTER;					// 만 65세 이상 = 어린이 요금 
-				}
-				else{
-					price = ADULT_AFTER;					// 나머지 = 어른 요금 
-				}
+				else if(generation == 2){
+					price = BABY_AFTER;
+					}
+				else if(generation == 3){
+					price = CHILD_AFTER;
+					}
+				else if(generation == 4){
+					price = TEEN_AFTER;
+					}
+				else if(generation == 5){
+					price = ADULT_AFTER;
+					}
+				else if(generation == 6){
+					price = CHILD_AFTER;
+					} 
 				break;
 				
 			case 3 :
-				if(age < 1){
-				price = FREE;								// 0 ~ 12개월 = 무료 
-				} 
-				else if((age >= 1) && (age < 3)){
-					price = BABY_DAY_TOTAL;					// 12개월 이상 36개월 미만 = 베이비 요금  
-				}
-				else if((age >= 3) && (age < 13)){
-					price = CHILD_DAY_TOTAL;				// 36개월 이상 ~ 만 12세 = 어린이 요금 
-				}
-				else if((age >= 13) && (age < 18)){
-					price = TEEN_DAY_TOTAL;					// 만 13세 ~ 18세 = 청소년 요금 
-				}
-				else if(age >= 65){
-					price = CHILD_DAY_TOTAL;				// 만 65세 이상 = 어린이 요금 
-				}
-				else{
-					price = ADULT_DAY_TOTAL;				// 나머지 = 어른 요금 
-				} 
+				if(generation == 1){
+					price = FREE;
+					} 
+				else if(generation == 2){
+					price = BABY_DAY_TOTAL;
+					}
+				else if(generation == 3){
+					price = CHILD_DAY_TOTAL;
+					}
+				else if(generation == 4){
+					price = TEEN_DAY_TOTAL;
+					}
+				else if(generation == 5){
+					price = ADULT_DAY_TOTAL;
+					}
+				else if(generation == 6){
+					price = CHILD_DAY_TOTAL;
+					}
 				break;
 				
 			case 4 :
-				if(age < 1){
-				price = FREE;								// 0 ~ 12개월 = 무료 
-				} 
-				else if((age >= 1) && (age < 3)){
-					price = BABY_AFTER_TOTAL;				// 12개월 이상 36개월 미만 = 베이비 요금  
-				}
-				else if((age >= 3) && (age < 13)){
-					price = CHILD_AFTER_TOTAL;				// 36개월 이상 ~ 만 12세 = 어린이 요금 
-				}
-				else if((age >= 13) && (age < 18)){
-					price = TEEN_AFTER_TOTAL;				// 만 13세 ~ 18세 = 청소년 요금 
-				}
-				else if(age >= 65){
-					price = CHILD_AFTER_TOTAL;				// 만 65세 이상 = 어린이 요금 
-				}
-				else{
-					price = ADULT_AFTER_TOTAL;				// 나머지 = 어른 요금 
-				}
+				if(generation == 1){
+					price = FREE;
+					} 
+				else if(generation == 2){
+					price = BABY_AFTER_TOTAL;
+					}
+				else if(generation == 3){
+					price = CHILD_AFTER_TOTAL;
+					}
+				else if(generation == 4){
+					price = TEEN_AFTER_TOTAL;
+					}
+				else if(generation == 5){
+					price = ADULT_AFTER_TOTAL;
+					}
+				else if(generation == 6){
+					price = CHILD_AFTER_TOTAL;
+					}
 				break;
 		}
 		
@@ -225,9 +245,10 @@ int main()
 				break;		
 			}
 		
-		printf("\n 가격은 %d원입니다. 감사합니다.\n", discountPrice);
+		printf("\n ***** 가격은 %d원입니다. 감사합니다. *****\n", discountPrice);
 		
 		ticketSelectArr[index] = ticketSelect;
+		generationArr[index] = generation;
 		orderCountArr[index] = orderCount;
 		discountArr[index] = discount;
 		discountPriceArr[index] = discountPrice;
@@ -235,63 +256,90 @@ int main()
 		
 		index++;
 		
-		printf("\n 계속 발권 하시겠습니까? \n1. 티켓 발권\n2. 종료\n");
+		printf("\n 계속 발권 하시겠습니까? \n 1. 티켓 발권\n 2. 종료\n\t");
 		scanf("%d", &again);
 		
 	} while(again == 1);
 	
 	printf("\n COCOLAND를 이용해주셔서 감사합니다.\n");
+	
+	FILE * filePointer = fopen("report.csv", "a");
 		
 	// 영수증 출력
-	printf("\n\n************* COCOLAND *************\n");
-	printf("   %s\t\t\t%s\t\t%s\n", "선택사항", "가격", "우대사항");
+	printf("\n\n****************************** COCOLAND ******************************\n\n");
+	printf("%10s\t   %6s  %2s  %8s  %15s \n", "선택사항", "연령", "매수", "가격", "우대사항\n");
 			
 	for (int i = 0; i < index; i++) {
+		fprintf(filePointer, "%d, %d, %d, %d, %d\n", ticketSelectArr[i], generationArr[i], orderCountArr[i], discountPriceArr[i], discountArr[i]);
 		switch (ticketSelectArr[i]) {
 			case 1:
-				printf("%s %5s","파크이용권","1Day");
+				printf("%s %7s","파크이용권","1Day");
 				break;
 			case 2:
-				printf("%s %5s","파크이용권","After4");
+				printf("%s %7s","파크이용권","After4");
 				break;
 			case 3:						
-				printf("%s %5s","종합이용권","1Day");
+				printf("%s %7s","종합이용권","1Day");
 				break;
 			case 4:
-				printf("%s %5s","종합이용권","After4");
+				printf("%s %7s","종합이용권","After4");
 				break;
 			default:
 				break;
 			}
-				
-		printf(" x %d 매\t\t%d원\t\t",orderCountArr[i], discountPriceArr[i]) ;
+		
+		switch (generationArr[i]) {
+			case 1:
+				printf("  %5s", "영아");
+				break;
+			case 2:
+				printf("  %5s", "유아");
+				break;
+			case 3:
+				printf("  %5s", "어린이");
+				break;
+			case 4:
+				printf("  %5s", "청소년");
+				break;
+			case 5:
+				printf("  %5s", "어른");
+				break;
+			case 6:
+				printf("  %5s", "고령");
+				break;				
+				 
+		}
+		
+		printf("%3d 매%11d원\t",orderCountArr[i], discountPriceArr[i]) ;
 				
 		switch (discountArr[i]) {
 			case 1:
-				printf("%s\n","없음");
+				printf("%10s\n","없음");
 				break;
 			case 2:
-				printf("%s\n","장애인 우대");
+				printf("%10s\n","장애인 우대");
 				break;
 			case 3:
-				printf("%s\n","국가유공자 우대");
+				printf("%10s\n","국가유공자 우대");
 				break;
 			case 4:
-				printf("%s\n","휴가장병 우대");
+				printf("%10s\n","휴가장병 우대");
 				break;
 			case 5:
-				printf("%s\n","임산부 우대");
+				printf("%10s\n","임산부 우대");
 				break;
 			case 6:
-				printf("%s\n","다둥이 행복카드 우대");
+				printf("%10s\n","다둥이 우대");
 				break;
 			default:
 				break;
 				}
 			}
 		
-	printf("\n입장료 총액은 %d원 입니다.", totalPrice);
-	printf("\n=====================================================================================\n") ;
+	printf("\n\n\n\t\t\t총액은 %d원 입니다.", totalPrice);
+	printf("\n\n\n***************************** THANK YOU ******************************\n") ;
+	
+	fclose(filePointer);
 	
 	return 0;
 }
