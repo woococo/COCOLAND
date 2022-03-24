@@ -1,8 +1,9 @@
-#include<stdio.h>
+ #include<stdio.h>
 
 int main()
 {
 	FILE *filePointer = fopen("report.csv", "r");
+	
 	const int MAX = 100;
 	int index = 0; 
 	int todayYMDArr[MAX], ticketSelectArr[MAX], generationArr[MAX], 
@@ -11,16 +12,18 @@ int main()
 	int freeCount=0, babyCount=0, childCount=0, teenCount=0, adultCount=0, oldCount=0;
 	int discountA=0, discountB=0, discountC=0, discountD=0, discountE=0, discountF=0;
 	int finalCount=0, finalPrice=0;
+	
 	while(fscanf(filePointer, "%d,%d,%d,%d,%d,%d", &todayYMDArr[index], &ticketSelectArr[index],
 				&generationArr[index], &orderCountArr[index], &discountPriceArr[index], &discountArr[index]) != -1){
 			index++;
 		}
 		
 		fclose(filePointer);
-		int i;
+		
 		printf("======================= report.csv =======================\n");
 		printf("%-8s %-5s %-10s %-7s %-10s %-10s\n","날짜","권종","연령구분","수량","가격","우대사항");
-		for(i = 0; i < index; i++){
+		
+		for(int i = 0; i < index; i++){
 			printf("%-8d %-5d %-10d %-7d %-10d %-10d\n", todayYMDArr[i], ticketSelectArr[i],
 			generationArr[i], orderCountArr[i], discountPriceArr[i], discountArr[i]);
 		}
@@ -86,7 +89,6 @@ int main()
 			finalPrice += discountPriceArr[j];
 		}
 		
-		
 		printf("\n\n==================== %s ====================\n", "권종별 판매 현황");
 		printf("%-20s 총 %5d 매\n","파크이용권[1DAY]", sumParkDay);
 		printf("%-20s 총 %5d 매\n","파크이용권[After4]", sumParkAfter);
@@ -100,7 +102,6 @@ int main()
 		printf("%-20s 총 %5d 매\n","청소년", teenCount);
 		printf("%-20s 총 %5d 매\n","어른", adultCount);
 		printf("%-20s 총 %5d 매\n","경로", oldCount);
-		
 		
 		printf("\n\n==================== %s ====================\n", "우대권 판매 현황"); 
 		printf("%-20s 총 %5d 매\n","없음", discountA);
